@@ -22,6 +22,11 @@ jobs:
           registry-url: https://registry.npmjs.org/
           node-version: 16.x
 
+      - name: Setup rust cache
+        uses: Swatinem/rust-cache@v1
+      - name: Install wasm-pack
+        uses: jetli/wasm-pack-action@v0.3.0
+
       - name: Setup Rust
         run: rustup set profile default
 

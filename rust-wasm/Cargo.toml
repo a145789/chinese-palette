@@ -29,7 +29,6 @@ serde = { version = "1.0", features = ["derive"] }
 # but you may be using a different one.
 serde_json = "1.0"
 tsify = "0.4.5"
-color-convert = "0.1.0"
 
 [dev-dependencies]
 wasm-bindgen-test = "0.3.34"
