@@ -37,7 +37,9 @@
   }
 
   async function getJson() {
-    const json = await fetch("/color.json")
+    const json = await fetch(
+      import.meta.env.DEV ? "/color.json" : "/chinese-palette/color.json"
+    )
     const str = await json.text()
     await init()
     colors = greet(str)
