@@ -7,15 +7,17 @@
     "wasm": "wasm-pack build ./rust-wasm --target web",
     "dev": "vite",
     "dev:wasm": "pnpm run wasm && node script/wasm-package-add-type.js && pnpm run dev",
-    "build": "vite build",
+    "build": "pnpm run wasm && node script/wasm-package-add-type.js && vite build",
     "preview": "vite preview",
-    "check": "svelte-check --tsconfig ./tsconfig.json"
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "deploy": "pnpm build && gh-pages -d dist"
   },
   "devDependencies": {
     "@iconify-json/carbon": "^1.1.20",
     "@ikun-ui/preset": "0.0.9-beta.4",
     "@sveltejs/vite-plugin-svelte": "^2.4.2",
     "@tsconfig/svelte": "^5.0.2",
+    "gh-pages": "^6.0.0",
     "svelte": "^4.2.0",
     "svelte-check": "^3.4.6",
     "svelte-copy": "^1.4.1",
