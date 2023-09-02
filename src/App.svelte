@@ -1,15 +1,27 @@
 <script lang="ts">
-  import init, { greet, SortBy, type Colors } from "rust-wasm"
+  import init, { greet, SortBy, type Colors, type ColorResult } from "rust-wasm"
   import { KInput } from "@ikun-ui/input"
   import { KSwitch } from "@ikun-ui/switch"
   import { KMessage } from "@ikun-ui/message"
-  import { KCollapse } from "@ikun-ui/collapse"
+  import Collapse from "./lib/Collapse.svelte"
+  import { KBacktop } from "@ikun-ui/backtop"
 
   let colors: Colors
-  let list: string | any[] = []
+  let list: ColorResult["data"] = []
+  let value = "粉"
+  let sortby = SortBy.Asc
+  const page = 0
+  let limit = 20
+  let total = 0
   function getList() {
-    list = colors.get_colors(value, sortby)
-    console.log(list)
+    const { data, total: _total } = colors.get_colors(
+      value,
+      sortby,
+      page,
+      limit
+    )
+    list = data
+    total = _total
     if (list.length === 0) {
       KMessage({
         content: "什么也没有哦",
@@ -18,13 +30,11 @@
     }
   }
 
-  let value = "粉"
-  const onInput = (e: CustomEvent) => {
-    value = e.detail
+  function switchChange(e: CustomEvent<any>) {
+    sortby = e.detail.newVal
+    limit = 20
     getList()
   }
-
-  let sortby = SortBy.Asc
 
   async function getJson() {
     const json = await fetch("/color.json")
@@ -32,6 +42,18 @@
     await init()
     colors = greet(str)
     getList()
+    window.addEventListener("scroll", () => {
+      if (limit > total) {
+        return
+      }
+      if (
+        document.documentElement.scrollTop + window.innerHeight >=
+        document.documentElement.scrollHeight - 20
+      ) {
+        limit += 20
+        getList()
+      }
+    })
   }
   getJson()
 </script>
@@ -39,9 +61,13 @@
 <main>
   <div>
     <KInput
+      bind:value
       placeholder="输入一种颜色，例如：黑/灰/白"
-      on:input={onInput}
-      {value}
+      useCompositionInput
+      on:compositionInput={() => {
+        limit = 20
+        getList()
+      }}
     />
   </div>
 
@@ -53,21 +79,20 @@
       unCheckedColor="bg-green-500"
       unCheckedValue={SortBy.Asc}
       checkedValue={SortBy.Desc}
-      on:change={getList}
+      on:change={switchChange}
     />
     <span class="text-14px ml-2">色系由大到小</span>
   </div>
 
   <div class="mt-5">
-    {#each list as { hex, name }}
-      <KCollapse
-        content="Sadness makes people more acute."
-        title={`${name} ${hex}`}
-        cls="my-4"
-      />
+    {#each list as item}
+      {#key item.hex}
+        <Collapse {item} />
+      {/key}
     {/each}
   </div>
 </main>
+<KBacktop bottom={100} right={100} showHeight={100} />
 
 <style>
   main {
@@ -76,7 +101,7 @@
     padding-top: 100px;
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 760px) {
     main {
       width: 100%;
       padding-top: 30px;
