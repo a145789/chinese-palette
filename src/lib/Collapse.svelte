@@ -37,7 +37,7 @@
   let fistRender = true
   const color = [item.hex, `rgb(${item.RGB.join()})`]
 
-  const textColor = palettes[0][luminance === Luminance.black ? 7 : 3][0]
+  const textColor = palettes[0][luminance === Luminance.black ? 9 : 0][0]
   const borderColor = palettes[0][luminance === Luminance.black ? 6 : 4][0]
 
   function copySuccess(text: string) {

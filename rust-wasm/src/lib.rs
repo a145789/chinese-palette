@@ -75,7 +75,13 @@ impl Colors {
                     .color
                     .clone()
                     .into_iter()
-                    .filter(|item| item.name.contains(&name))
+                    .filter(|item| {
+                        if name.starts_with("#") {
+                            item.hex.contains(&name)
+                        } else {
+                            item.name.contains(&name)
+                        }
+                    })
                     .collect();
 
                 match sortby {

@@ -13,7 +13,8 @@
   const page = 0
   let limit = 20
   let total = 0
-  function getList() {
+  let messageInst: any = null
+  async function getList() {
     const { data, total: _total } = colors.get_colors(
       value,
       sortby,
@@ -23,7 +24,10 @@
     list = data
     total = _total
     if (list.length === 0) {
-      KMessage({
+      if (messageInst !== null) {
+        await KMessage.clear(messageInst)
+      }
+      messageInst = KMessage({
         content: "什么也没有哦",
         type: "info",
       })
@@ -64,7 +68,7 @@
   <div>
     <KInput
       bind:value
-      placeholder="输入一种颜色，例如：黑/灰/白"
+      placeholder="输入颜色名称或者hex值，例如：黑/灰/白/#83cbac"
       useCompositionInput
       on:compositionInput={() => {
         limit = 20
