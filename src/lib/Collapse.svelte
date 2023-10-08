@@ -20,9 +20,9 @@
       : Luminance.white
 
   function hexToRgb(hex: string) {
-    let r = parseInt(hex.slice(1, 3), 16)
-    let g = parseInt(hex.slice(3, 5), 16)
-    let b = parseInt(hex.slice(5, 7), 16)
+    const r = parseInt(hex.slice(1, 3), 16)
+    const g = parseInt(hex.slice(3, 5), 16)
+    const b = parseInt(hex.slice(5, 7), 16)
 
     return `rgb(${r}, ${g}, ${b})`
   }
@@ -40,8 +40,12 @@
   const textColor = palettes[0][luminance === Luminance.black ? 9 : 0][0]
   const borderColor = palettes[0][luminance === Luminance.black ? 6 : 4][0]
 
+  let inst: any = null
   function copySuccess(text: string) {
-    KMessage({
+    if (inst) {
+      KMessage.clear(inst)
+    }
+    inst = KMessage({
       content: `${text} 复制成功`,
       type: "success",
     })
@@ -134,7 +138,7 @@
       {#each color as t}
         <div
           class="h-full w-50% flex justify-center items-center cursor-pointer text-14px font-bold"
-          style="background-color: {borderColor};color: {t}"
+          style="background-color: {textColor};color: {t}"
           use:copy={t}
           on:svelte-copy={() => copySuccess(t)}
         >
