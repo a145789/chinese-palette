@@ -45,7 +45,6 @@ impl Colors {
     pub fn new(color_str: &str) -> Colors {
         let parsed_color: Result<Vec<Color>, _> = from_str(color_str);
 
-        println!("{:?}", parsed_color);
         let color = parsed_color
             .unwrap_or_default()
             .iter()

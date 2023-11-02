@@ -14,26 +14,26 @@
   },
   "devDependencies": {
     "@iconify-json/carbon": "^1.1.21",
-    "@ikun-ui/preset": "0.0.9",
+    "@ikun-ui/preset": "0.0.13-beta.3",
     "@sveltejs/vite-plugin-svelte": "^2.4.6",
     "@tsconfig/svelte": "^5.0.2",
     "gh-pages": "^6.0.0",
-    "svelte": "^4.2.1",
+    "svelte": "^4.2.2",
     "svelte-check": "^3.5.2",
     "svelte-copy": "^1.4.1",
     "tslib": "^2.6.2",
     "typescript": "^5.2.2",
-    "unocss": "^0.56.5",
-    "vite": "^4.4.11",
+    "unocss": "^0.57.1",
+    "vite": "^4.5.0",
     "vite-plugin-wasm-pack": "^0.1.12"
   },
   "dependencies": {
     "@ant-design/colors": "^7.0.0",
-    "@ikun-ui/backtop": "0.0.9",
-    "@ikun-ui/icon": "0.0.9",
-    "@ikun-ui/input": "0.0.9",
-    "@ikun-ui/message": "0.0.9",
-    "@ikun-ui/switch": "0.0.9",
-    "@unocss/reset": "^0.56.5"
+    "@ikun-ui/backtop": "0.0.13-beta.3",
+    "@ikun-ui/icon": "0.0.13-beta.3",
+    "@ikun-ui/input": "0.0.13-beta.3",
+    "@ikun-ui/message": "0.0.13-beta.3",
+    "@ikun-ui/switch": "0.0.13-beta.3",
+    "@unocss/reset": "^0.57.1"
   }
 }
